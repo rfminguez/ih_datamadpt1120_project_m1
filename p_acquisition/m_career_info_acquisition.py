@@ -17,7 +17,12 @@ def get_total_jobs_number(conn_engine, country_code=None):
     {country_code_filter}
     """
 
-    return float(pd.read_sql(sql_query, conn_engine)["TOTAL_JOBS"][0])
+    result = float(pd.read_sql(sql_query, conn_engine)["TOTAL_JOBS"][0])
+
+    if result == 0:
+        raise Exception(f"No entries for the country code {country_code}!!!")
+
+    return result
 
 
 def get_career_info_df(conn_engine, country_code=None):
