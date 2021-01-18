@@ -50,4 +50,13 @@ El resultado es una tabla tabla que se guarda como fichero .CSV.
 
 
 # Instrucciones
+Ejecutar desde línea de comandos:
 
+`python main.py`
+
+Opcionalmente puede recibir dos parámetros:
+
+| Parámetro | Descripción |
+| --- | --- |
+| -c --country + código de país | Obtiene los datos de un país concreto. Si no se especifica obtiene los datos de todos los paises. |
+| -o --output + ruta CSV | Guarda el resultado en la ruta indicada. Por defecto, si no se especifica, se guarda en `data/results/output.csv` |
