@@ -5,15 +5,18 @@ from p_reporting.m_report_to_csv import df_to_csv
 
 import argparse
 import pandas as pd
+import os
 
 
 def valid_country_code(country_code):
     if country_code not in list(get_country_codes_df()["country_code"]):
-        raise argparse.ArgumentTypeError('invalid country code!!!')
+        raise argparse.ArgumentTypeError(f'invalid country code ({country_code})!!!')
     return country_code
 
 
 def valid_path(path):
+    if not os.path.exists(os.path.dirname(path)):
+        raise argparse.ArgumentTypeError(f"invalid path ({path})!!!")
     return path
 
 
@@ -57,8 +60,6 @@ def main(arguments):
                       left_on='country_code',
                       right_on='country_code',
                       how='left').drop('country_code', axis=1)
-
-    print(result.head())
 
     result = pd.merge(result, job_codes,
                       left_on='normalized_job_code',
