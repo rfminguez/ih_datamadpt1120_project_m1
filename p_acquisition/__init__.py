@@ -1,0 +1,1 @@
+# En teoria, este fichero define un paquete
