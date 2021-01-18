@@ -13,8 +13,8 @@ def valid_country_code(country_code):
     return country_code
 
 
-def valid_job_code(job_code):
-    return job_code
+def valid_path(path):
+    return path
 
 
 def argument_parser():
@@ -29,11 +29,12 @@ def argument_parser():
                         help='valid country code',
                         type=valid_country_code)
 
-    parser.add_argument("-j",
-                        "--job",
-                        dest="job_code",
-                        help="valid job code",
-                        type=valid_job_code)
+    parser.add_argument("-o",
+                        "--output",
+                        dest="output",
+                        help="output csv path",
+                        default = "data/results/output.csv",
+                        type=valid_path)
 
     return parser.parse_args()
 
@@ -57,12 +58,15 @@ def main(arguments):
                       right_on='country_code',
                       how='left').drop('country_code', axis=1)
 
+    print(result.head())
+
     result = pd.merge(result, job_codes,
                       left_on='normalized_job_code',
                       right_on='job_code',
                       how='left').drop(['normalized_job_code', 'job_code'], axis=1)
 
-    df_to_csv(result, "data/results/result.csv")
+    # Save to CSV
+    df_to_csv(result, arguments.output)
 
     print("Pipeline is complete!")
 
