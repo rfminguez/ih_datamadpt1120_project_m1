@@ -1,5 +1,5 @@
 # Descripción
-El proyecto consiste en crear un *pipeline* que, utilizando varias técnicas, cruce distintas fuentes de datos para enriquecer un dataset.
+El proyecto consiste en crear un *pipeline* que, utilizando varias técnicas, cruza distintas fuentes de datos para enriquecer un dataset.
 
 ## Base de datos
 Partimos de una base de datos sqlite que está en:
@@ -90,9 +90,11 @@ Opcionalmente puede recibir dos parámetros:
     ├── p_wrangling
     └── data
         ├── raw
+        |    └── raw_data_project_m1.db
         ├── processed
         └── results
 ```
+
 
 # TO-DO
 Bonus.
