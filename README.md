@@ -1,5 +1,5 @@
 # Descripción
-El proyecto consiste en crear un *pipeline* que, utilizando varias técnicas, cruce distintas fuentes de datos para enriquecer un dataset.
+El proyecto consiste en crear un *pipeline* que, utilizando varias técnicas, cruza distintas fuentes de datos para enriquecer un dataset.
 
 ## Base de datos
 Partimos de una base de datos sqlite que está en:
@@ -49,6 +49,14 @@ El resultado es una tabla tabla que se guarda como fichero .CSV.
 | ... | ... | ... | ... | ... |
 
 
+# Librerias
+- numpy
+- request
+- beautifulsoup
+- sqlite
+- argparse
+
+
 # Instrucciones
 Ejecutar desde línea de comandos:
 
@@ -60,3 +68,35 @@ Opcionalmente puede recibir dos parámetros:
 | --- | --- |
 | -c --country + código de país | Obtiene los datos de un país concreto. Si no se especifica obtiene los datos de todos los paises. |
 | -o --output + ruta CSV | Guarda el resultado en la ruta indicada. Por defecto, si no se especifica, se guarda en `data/results/output.csv` |
+
+
+# Estructura de directorios
+```
+└── project
+    ├── .gitignore
+    ├── README.md
+    ├── main.py
+    ├── notebooks
+    │   ├── API_analysis.ipynb
+    │   ├── database_analysis.ipynb
+    │   └── web_scraping_con_beautifulsoup.ipynb
+    ├── p_acquisition
+    │   ├── m_career_info_acquisition.py
+    │   ├── m_country_data_acquisition.py
+    │   └── m_job_data_acquisition.py
+    ├── p_analysis
+    ├── p_reporting
+    │   └── m_report_to_csv.py
+    ├── p_wrangling
+    └── data
+        ├── raw
+        |    └── raw_data_project_m1.db
+        ├── processed
+        └── results
+```
+
+
+# TO-DO
+Bonus.
+
+Presentación PPT.
