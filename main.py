@@ -2,10 +2,12 @@ from p_acquisition.m_country_data_acquisition import get_country_codes_df
 from p_acquisition.m_job_data_acquisition import get_jobs_df
 from p_acquisition.m_career_info_acquisition import get_career_info_df, setup_conn_engine
 from p_reporting.m_report_to_csv import df_to_csv
+from p_acquisition.m_arguments_data_acquisition import get_num_arguments_by_vote_tendency
 
 import argparse
 import pandas as pd
 import os
+from sqlalchemy import create_engine
 
 
 def valid_country_code(country_code):
@@ -15,8 +17,8 @@ def valid_country_code(country_code):
 
 
 def valid_path(path):
-    if not os.path.exists(os.path.dirname(path)):
-        raise argparse.ArgumentTypeError(f"invalid path ({path})!!!")
+    if not os.path.exists(path):
+        raise argparse.ArgumentTypeError(f"invalid directory ({path})!!!")
     return path
 
 
@@ -35,16 +37,14 @@ def argument_parser():
     parser.add_argument("-o",
                         "--output",
                         dest="output",
-                        help="output csv path",
-                        default = "data/results/output.csv",
+                        help="output directory",
+                        default = "data/results",
                         type=valid_path)
 
     return parser.parse_args()
 
 
-def main(arguments):
-    print("Starting pipeline...")
-
+def get_job_distribution_urban_vs_city():
     # Descarga info de carreras desde base de datos sqlite
     db_path = 'sqlite:///./data/raw/raw_data_project_m1.db'
     career_info = get_career_info_df(setup_conn_engine(db_path), arguments.country)
@@ -66,8 +66,20 @@ def main(arguments):
                       right_on='job_code',
                       how='left').drop(['normalized_job_code', 'job_code'], axis=1)
 
-    # Save to CSV
-    df_to_csv(result, arguments.output)
+    return result
+
+
+def setup_connection(conn_string = 'sqlite:///data/raw/raw_data_project_m1.db'):
+    return create_engine(conn_string)
+
+
+def main(arguments):
+    print("Starting pipeline...")
+
+    motor_conexion = setup_connection()
+
+    df_to_csv(get_job_distribution_urban_vs_city(), arguments.output, "job_distribution_urban_vs_city.csv")
+    df_to_csv(get_num_arguments_by_vote_tendency(motor_conexion), arguments.output, "num_arguments_by_vote_tendency.csv")
 
     print("Pipeline is complete!")
 
