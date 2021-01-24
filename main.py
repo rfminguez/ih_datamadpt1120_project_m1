@@ -1,5 +1,5 @@
 from p_acquisition.m_country_data_acquisition import get_country_codes_df
-from p_acquisition.m_job_data_acquisition import get_jobs_df
+from p_acquisition.m_job_data_acquisition import get_jobs_df, get_top_jobs_by_education_level
 from p_acquisition.m_career_info_acquisition import get_career_info_df, setup_conn_engine
 from p_reporting.m_report_to_csv import df_to_csv
 from p_acquisition.m_arguments_data_acquisition import get_num_arguments_by_vote_tendency
@@ -80,6 +80,7 @@ def main(arguments):
 
     df_to_csv(get_job_distribution_urban_vs_city(), arguments.output, "job_distribution_urban_vs_city.csv")
     df_to_csv(get_num_arguments_by_vote_tendency(motor_conexion), arguments.output, "num_arguments_by_vote_tendency.csv")
+    df_to_csv(get_top_jobs_by_education_level(motor_conexion), arguments.output, "top_jobs_by_education_level.csv")
 
     print("Pipeline is complete!")
 
